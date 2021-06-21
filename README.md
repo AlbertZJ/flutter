@@ -15,7 +15,7 @@
 
 快速运行
 1.克隆本项目到本地  
-git clone https://github.com/AlbertZJ/blogserver.git
+git clone https://gitee.com/AlbertZJ/flutter.git
 
 项目依赖
 1.vue-echarts
