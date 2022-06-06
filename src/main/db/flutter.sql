@@ -3,18 +3,18 @@
 
  Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 50149
+ Source Server Version : 80027
  Source Host           : localhost:3306
- Source Schema         : vueblog2
+ Source Schema         : flutter
 
  Target Server Type    : MySQL
- Target Server Version : 50149
+ Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 21/06/2021 15:39:35
+ Date: 06/06/2022 23:16:37
 */
 
-SET NAMES utf8;
+SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
@@ -22,23 +22,23 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
   `mdContent` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'md文件源码',
   `htmlContent` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'html源码',
   `summary` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '文章内容',
-  `cid` int(11) NULL DEFAULT NULL COMMENT '栏目编号',
-  `uid` int(11) NULL DEFAULT NULL COMMENT '用户编号',
-  `publishDate` datetime NULL DEFAULT NULL COMMENT '最近编辑时间',
-  `editTime` datetime NULL DEFAULT NULL,
-  `state` int(11) NULL DEFAULT NULL COMMENT '0表示草稿箱，1表示已发表，2表示已删除',
-  `pageView` int(11) NULL DEFAULT 0 COMMENT '浏览次数',
+  `cid` int(0) NULL DEFAULT NULL COMMENT '栏目编号',
+  `uid` int(0) NULL DEFAULT NULL COMMENT '用户编号',
+  `publishDate` datetime(0) NULL DEFAULT NULL COMMENT '最近编辑时间',
+  `editTime` datetime(0) NULL DEFAULT NULL,
+  `state` int(0) NULL DEFAULT NULL COMMENT '0表示草稿箱，1表示已发表，2表示已删除',
+  `pageView` int(0) NULL DEFAULT 0 COMMENT '浏览次数',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `cid`(`cid`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE,
   CONSTRAINT `article_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `article_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 156 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 156 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of article
@@ -95,15 +95,15 @@ INSERT INTO `article` VALUES (155, 'sw', 'sw', '<p>sw</p>\n', 'sw\n', 58, 7, '20
 -- ----------------------------
 DROP TABLE IF EXISTS `article_tags`;
 CREATE TABLE `article_tags`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `aid` int(11) NULL DEFAULT NULL COMMENT '文章编号',
-  `tid` int(11) NULL DEFAULT NULL COMMENT '标签编号',
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `aid` int(0) NULL DEFAULT NULL COMMENT '文章编号',
+  `tid` int(0) NULL DEFAULT NULL COMMENT '标签编号',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `tid`(`tid`) USING BTREE,
   INDEX `article_tags_ibfk_1`(`aid`) USING BTREE,
   CONSTRAINT `article_tags_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `article_tags_ibfk_2` FOREIGN KEY (`tid`) REFERENCES `tags` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of article_tags
@@ -136,12 +136,12 @@ INSERT INTO `article_tags` VALUES (61, 127, 67);
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `cateName` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '栏目名称',
   `date` date NULL DEFAULT NULL COMMENT '发表时间',
-  `state` int(11) NULL DEFAULT 1 COMMENT '1表示已发布，2表示已删除',
+  `state` int(0) NULL DEFAULT 1 COMMENT '1表示已发布，2表示已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of category
@@ -159,17 +159,17 @@ INSERT INTO `category` VALUES (65, 'springboo', '2020-01-29', NULL);
 -- ----------------------------
 DROP TABLE IF EXISTS `comlikes`;
 CREATE TABLE `comlikes`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `likes` int(11) NULL DEFAULT NULL COMMENT '1表示喜欢(-1表示不喜欢)',
-  `cid` int(11) NULL DEFAULT NULL,
-  `uid` int(11) NULL DEFAULT NULL,
-  `publishDate` datetime NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `likes` int(0) NULL DEFAULT NULL COMMENT '1表示喜欢(-1表示不喜欢)',
+  `cid` int(0) NULL DEFAULT NULL,
+  `uid` int(0) NULL DEFAULT NULL,
+  `publishDate` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE,
   INDEX `cid`(`cid`) USING BTREE,
   CONSTRAINT `comlikes_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `comlikes_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `comments` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 69 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 69 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of comlikes
@@ -198,19 +198,19 @@ INSERT INTO `comlikes` VALUES (68, 1, 137, 7, '2020-04-15 21:29:54');
 -- ----------------------------
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `aid` int(11) NULL DEFAULT NULL COMMENT '文章id',
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `aid` int(0) NULL DEFAULT NULL COMMENT '文章id',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '评论内容',
-  `publishDate` datetime NULL DEFAULT NULL COMMENT '留言时间',
-  `parentId` int(11) NULL DEFAULT -1 COMMENT '-1表示正常回复，其他值表示是评论的回复',
-  `uid` int(11) NULL DEFAULT NULL,
-  `state` int(11) NULL DEFAULT 1 COMMENT '0表示草稿箱，1表示已发表，2表示已删除',
+  `publishDate` datetime(0) NULL DEFAULT NULL COMMENT '留言时间',
+  `parentId` int(0) NULL DEFAULT -1 COMMENT '-1表示正常回复，其他值表示是评论的回复',
+  `uid` int(0) NULL DEFAULT NULL,
+  `state` int(0) NULL DEFAULT 1 COMMENT '0表示草稿箱，1表示已发表，2表示已删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `aid`(`aid`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE,
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `article` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 160 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 160 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of comments
@@ -306,16 +306,16 @@ INSERT INTO `comments` VALUES (159, 130, 'java', '2021-06-16 22:59:02', -1, 7, 1
 -- ----------------------------
 DROP TABLE IF EXISTS `countcomlikes`;
 CREATE TABLE `countcomlikes`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `countlike` int(250) NULL DEFAULT 0 COMMENT '点赞回复数',
-  `countdislike` int(250) NULL DEFAULT 0 COMMENT '反对回复数',
-  `cid` int(11) NULL DEFAULT NULL,
-  `publishDate` datetime NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `countlike` int(0) NULL DEFAULT 0 COMMENT '点赞回复数',
+  `countdislike` int(0) NULL DEFAULT 0 COMMENT '反对回复数',
+  `cid` int(0) NULL DEFAULT NULL,
+  `publishDate` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `cid_2`(`cid`) USING BTREE,
   INDEX `cid`(`cid`) USING BTREE,
   CONSTRAINT `countcomlikes_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `comments` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 277 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 277 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of countcomlikes
@@ -409,16 +409,16 @@ INSERT INTO `countcomlikes` VALUES (276, 0, 0, 159, '2021-06-16 22:59:02');
 -- ----------------------------
 DROP TABLE IF EXISTS `countlikes`;
 CREATE TABLE `countlikes`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `countlike` int(250) NULL DEFAULT 0 COMMENT '文章点赞数',
-  `countdislike` int(250) NULL DEFAULT 0 COMMENT '文章反对数',
-  `aid` int(11) NULL DEFAULT NULL,
-  `publishDate` datetime NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `countlike` int(0) NULL DEFAULT 0 COMMENT '文章点赞数',
+  `countdislike` int(0) NULL DEFAULT 0 COMMENT '文章反对数',
+  `aid` int(0) NULL DEFAULT NULL,
+  `publishDate` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `aid_2`(`aid`) USING BTREE,
   INDEX `aid`(`aid`) USING BTREE,
   CONSTRAINT `countlikes_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `article` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of countlikes
@@ -436,17 +436,17 @@ INSERT INTO `countlikes` VALUES (16, 1, 0, 154, '2020-04-15 22:21:08');
 -- ----------------------------
 DROP TABLE IF EXISTS `favorite`;
 CREATE TABLE `favorite`  (
-  `id` int(25) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NULL DEFAULT NULL,
-  `aid` int(11) NULL DEFAULT NULL,
-  `state` int(11) NULL DEFAULT 1 COMMENT '1表示已收藏，2表示已删除',
-  `publishDate` datetime NULL DEFAULT NULL COMMENT '收藏时间',
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `uid` int(0) NULL DEFAULT NULL,
+  `aid` int(0) NULL DEFAULT NULL,
+  `state` int(0) NULL DEFAULT 1 COMMENT '1表示已收藏，2表示已删除',
+  `publishDate` datetime(0) NULL DEFAULT NULL COMMENT '收藏时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE,
   INDEX `aid`(`aid`) USING BTREE,
   CONSTRAINT `favorite_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `favorite_ibfk_2` FOREIGN KEY (`aid`) REFERENCES `article` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of favorite
@@ -468,17 +468,17 @@ INSERT INTO `favorite` VALUES (31, 7, 130, 1, '2021-06-16 22:59:03');
 -- ----------------------------
 DROP TABLE IF EXISTS `likes`;
 CREATE TABLE `likes`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `likes` int(11) NULL DEFAULT NULL COMMENT '1表示喜欢(-1表示不喜欢)',
-  `uid` int(11) NULL DEFAULT NULL,
-  `aid` int(11) NULL DEFAULT NULL,
-  `publishDate` datetime NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `likes` int(0) NULL DEFAULT NULL COMMENT '1表示喜欢(-1表示不喜欢)',
+  `uid` int(0) NULL DEFAULT NULL,
+  `aid` int(0) NULL DEFAULT NULL,
+  `publishDate` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE,
   INDEX `aid`(`aid`) USING BTREE,
   CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`aid`) REFERENCES `article` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of likes
@@ -499,19 +499,19 @@ INSERT INTO `likes` VALUES (30, 1, 7, 151, '2020-04-16 21:52:24');
 -- ----------------------------
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
   `mdContent` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'md文件源码',
   `htmlContent` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'html源码',
   `message` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '公告内容',
-  `publishDate` datetime NULL DEFAULT NULL COMMENT '发布时间',
-  `uid` int(11) NULL DEFAULT NULL,
-  `state` int(11) NOT NULL DEFAULT 1 COMMENT '0表示草稿箱，1表示已发表，2表示已删除',
+  `publishDate` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
+  `uid` int(0) NULL DEFAULT NULL,
+  `state` int(0) NOT NULL DEFAULT 1 COMMENT '0表示草稿箱，1表示已发表，2表示已删除',
   `news` enum('是','否') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '否' COMMENT '提醒表示进入即弹出通知',
   PRIMARY KEY (`id`, `state`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE,
   CONSTRAINT `notice_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of notice
@@ -524,14 +524,14 @@ INSERT INTO `notice` VALUES (57, '清明', '清明放假**大家准备回家**',
 -- ----------------------------
 DROP TABLE IF EXISTS `pv`;
 CREATE TABLE `pv`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `countDate` date NULL DEFAULT NULL,
-  `pv` int(11) NULL DEFAULT NULL COMMENT '浏览次数',
-  `uid` int(11) NULL DEFAULT NULL COMMENT '用户编号',
+  `pv` int(0) NULL DEFAULT NULL COMMENT '浏览次数',
+  `uid` int(0) NULL DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `pv_ibfk_1`(`uid`) USING BTREE,
   CONSTRAINT `pv_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 16322 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 16322 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of pv
@@ -566,12 +566,12 @@ INSERT INTO `pv` VALUES (16321, '2021-06-17', 2, 20);
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
   `date` date NULL DEFAULT NULL COMMENT '创建时间',
-  `state` int(11) NULL DEFAULT NULL COMMENT '1表示已发布，2表示已删除',
+  `state` int(0) NULL DEFAULT NULL COMMENT '1表示已发布，2表示已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of roles
@@ -589,15 +589,15 @@ INSERT INTO `roles` VALUES (16, '管理员', '2020-03-04', NULL);
 -- ----------------------------
 DROP TABLE IF EXISTS `roles_user`;
 CREATE TABLE `roles_user`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rid` int(11) NULL DEFAULT 2,
-  `uid` int(11) NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `rid` int(0) NULL DEFAULT 2,
+  `uid` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `rid`(`rid`) USING BTREE,
   INDEX `roles_user_ibfk_2`(`uid`) USING BTREE,
   CONSTRAINT `roles_user_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `roles` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `roles_user_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 147 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 147 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of roles_user
@@ -628,11 +628,11 @@ INSERT INTO `roles_user` VALUES (146, 5, 13);
 -- ----------------------------
 DROP TABLE IF EXISTS `tags`;
 CREATE TABLE `tags`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `tagName` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标签',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `tagName`(`tagName`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tags
@@ -665,25 +665,25 @@ INSERT INTO `tags` VALUES (72, '雨纷纷');
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '账号',
   `nickname` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '新用户' COMMENT '姓名',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '202cb962ac59075b964b07152d234b70' COMMENT '密码',
   `enabled` tinyint(1) NULL DEFAULT 1 COMMENT '是否启用',
   `email` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `userface` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg' COMMENT '照片',
-  `regTime` datetime NULL DEFAULT '2019-12-24 06:30:46',
-  `state` int(11) NULL DEFAULT 1 COMMENT '1表示已注册，2表示已删除',
+  `regTime` datetime(0) NULL DEFAULT '2019-12-24 06:30:46',
+  `state` int(0) NULL DEFAULT 1 COMMENT '1表示已注册，2表示已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (6, 'fengrongsheng', '冯荣生', '202cb962ac59075b964b07152d234b70', 1, 'linghu@qq.com', 'https://img.zcool.cn/community/0153fe5e018674a80120a895d150d4.jpg@1280w_1l_2o_100sh.jpg', '2017-12-08 09:30:22', 1);
-INSERT INTO `user` VALUES (7, 'zengjian', '曾剑', '202cb962ac59075b964b07152d234b70', 1, '1353296585@qq.com', 'https://pic2.zhimg.com/v2-08282885ece6cf0fbb46d490fe24b773_r.jpg?source=1940ef5c', '2017-12-21 13:30:29', 1);
-INSERT INTO `user` VALUES (10, 'liuxue', '刘学s', '202cb962ac59075b964b07152d234b70', 1, 'qiaofeng@qq.com', 'https://img.zcool.cn/community/0153fe5e018674a80120a895d150d4.jpg@1280w_1l_2o_100sh.jpg', '2017-12-24 06:30:46', 1);
-INSERT INTO `user` VALUES (13, 'jiangjiacheng', '蒋家成', '202cb962ac59075b964b07152d234b70', 1, 'duanzhengchun@qq.com', 'https://img.zcool.cn/community/0153fe5e018674a80120a895d150d4.jpg@1280w_1l_2o_100sh.jpg', '2017-12-24 06:30:46', 1);
+INSERT INTO `user` VALUES (6, 'fengrongsheng', '冯荣声', '202cb962ac59075b964b07152d234b70', 1, 'linghu@qq.com', 'https://img.zcool.cn/community/0153fe5e018674a80120a895d150d4.jpg@1280w_1l_2o_100sh.jpg', '2017-12-08 09:30:22', 1);
+INSERT INTO `user` VALUES (7, 'Carlow', '卡洛', '202cb962ac59075b964b07152d234b70', 1, 'Carlow@qq.com', 'https://pic2.zhimg.com/v2-08282885ece6cf0fbb46d490fe24b773_r.jpg?source=1940ef5c', '2017-12-21 13:30:29', 1);
+INSERT INTO `user` VALUES (10, 'liuxue', '刘学', '202cb962ac59075b964b07152d234b70', 1, 'qiaofeng@qq.com', 'https://img.zcool.cn/community/0153fe5e018674a80120a895d150d4.jpg@1280w_1l_2o_100sh.jpg', '2017-12-24 06:30:46', 1);
+INSERT INTO `user` VALUES (13, 'jiangjiacheng', '蒋家橙', '202cb962ac59075b964b07152d234b70', 1, 'duanzhengchun@qq.com', 'https://img.zcool.cn/community/0153fe5e018674a80120a895d150d4.jpg@1280w_1l_2o_100sh.jpg', '2017-12-24 06:30:46', 1);
 INSERT INTO `user` VALUES (14, 'wangliangsheng', '王亮申', '202cb962ac59075b964b07152d234b70', 0, 'chenjialuo@qq.com', 'https://img.zcool.cn/community/0153fe5e018674a80120a895d150d4.jpg@1280w_1l_2o_100sh.jpg', '2017-12-24 06:30:46', 1);
 INSERT INTO `user` VALUES (15, 'zengguopan', '曾国藩', '202cb962ac59075b964b07152d234b70', 1, 'yuanchengzhi@qq.com', 'https://img.zcool.cn/community/0153fe5e018674a80120a895d150d4.jpg@1280w_1l_2o_100sh.jpg', '2017-12-24 06:30:46', 1);
 INSERT INTO `user` VALUES (16, 'liuxiang', '刘翔', '202cb962ac59075b964b07152d234b70', 0, 'chuliuxiang@qq.com', 'https://up.enterdesk.com/edpic/07/35/1a/07351a66ab5afac72e8f1faf97367460.jpeg', '2017-12-24 06:30:46', 1);

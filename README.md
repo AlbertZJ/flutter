@@ -22,6 +22,6 @@ git clone https://gitee.com/AlbertZJ/flutter.git
 2.mavonEditor
 
 License
-APACHE
+APACHE2.0
 
 欢迎小伙伴们star、fork。
